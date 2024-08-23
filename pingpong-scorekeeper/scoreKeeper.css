@@ -1,0 +1,93 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerSection,
+section {
+    width: 50%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.headerSection {
+    margin-top: 25px;
+}
+
+.headerSection p {
+    margin: 5px;
+    margin-left: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+section {
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+section h1 {
+    font-size: 3em;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    padding-left: 10px;
+}
+
+section p {
+    font-size: 1.2em;
+    padding-left: 10px;
+}
+
+section h2,
+select {
+    display: inline;
+    padding-left: 10px;
+}
+
+select {
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons button {
+    padding: 5px 15px;
+    width: 33%;
+    flex-grow: 1;
+    border-radius: 1px;
+    font-size: 1.5em;
+    border: none;
+    color: white;
+}
+
+.buttons button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.buttons button:disabled {
+    opacity: 0.5;
+}
+
+#p1 {
+    background-color: rgb(119, 202, 202);
+}
+
+#p2 {
+    background-color: rgb(108, 161, 253);
+}
+
+#reset {
+    background-color: rgb(255, 81, 81);
+}
+
+img {
+    width: 100%;
+}
