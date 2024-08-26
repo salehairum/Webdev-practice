@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="calculator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Calculator</title>
+</head>
+
+<body>
+    <main class="calculator">
+
+        <div class="answer">
+            <h2 id="expr">0</h2>
+            <h2 id="result">-</h2>
+        </div>
+
+        <div class="buttonBox">
+            <div class=row id="row1">
+                <button id="n7" value="7">7</button>
+                <button id="n8" value="8">8</button>
+                <button id="n9" value="9">9</button>
+                <button id="back" value="back"><i class="fa-solid fa-delete-left"></i></button>
+                <button id="clear" value="clear">CLR</button>
+            </div>
+            <div class=row id="row2">
+                <button id="n4" value="4">4</button>
+                <button id="n5" value="5">5</button>
+                <button id="n6" value="6">6</button>
+                <button id="mul" value="*"><i class="fa-solid fa-xmark"></i></button>
+                <button id="div" value="/"><i class="fa-solid fa-divide"></i></button>
+            </div>
+            <div class=row id="row3">
+                <button id="n1" value="1">1</button>
+                <button id="n2" value="2">2</button>
+                <button id="n3" value="3">3</button>
+                <button id="add" value="+">+</button>
+                <button id="sub" value="-">-</button>
+            </div>
+            <div class=row id="row4">
+                <button id="n0" value="0">0</button>
+                <button id="decimal" value="decimal">.</button>
+                <button id="opB" value="(">(</button>
+                <button id="clB" value=")">)</button>
+                <button id="equal" value="=">=</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="calculator.js">
+    </script>
+</body>
+
+</html>
