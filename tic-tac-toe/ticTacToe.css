@@ -1,0 +1,53 @@
+body {
+    background-color: #DDB892;
+    color: #7F5539;
+    font-family: "Handjet", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+h1 {
+    font-size: 4em;
+    padding: 20px;
+    margin: 0px;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+span {
+    background-color: #EDE0D4;
+    padding: 32px 0px;
+    font-size: 3em;
+    flex-grow: 1;
+    text-align: center;
+    border: 8px solid #7F5539;
+}
+
+.board {
+    background-color: #7F5539;
+    width: 30%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.row {
+    margin-top: 15px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.row:last-of-type {
+    margin-bottom: 40px;
+}
