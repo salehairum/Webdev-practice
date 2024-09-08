@@ -30,11 +30,19 @@ span {
     flex-grow: 1;
     text-align: center;
     border: 8px solid #7F5539;
+    color: #d7cabe;
+}
+
+main {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .board {
     background-color: #7F5539;
-    width: 30%;
+    width: 60%;
     height: 60vh;
     display: flex;
     flex-direction: column;
