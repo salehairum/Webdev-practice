@@ -1,5 +1,5 @@
 let turn = 0;
-let spans = document.querySelectorAll('span');
+let spans = document.querySelectorAll('#box');
 let turnText = document.querySelector('#playerNo');
 var modal = document.getElementById("winnerModal");
 var winnerMessage = document.getElementById("winnerMessage");
@@ -26,13 +26,30 @@ for (let span of spans) {
                     showWinner();
                 }
                 else if (gameWon == 2)
-                    turnText.textContent = 2;
+                    showWinner();
+                // turnText.textContent = 2;
                 else if (gameWon == 3)
-                    turnText.textContent = "Draw";
+                    showWinner();
+                //turnText.textContent = "Draw";
             }
         }
     })
 }
+
+closeModal.addEventListener('click', function (e) {
+    //reset game
+    let i = 1;
+    for (let span of spans) {
+        span.textContent = i;
+        i++;
+        span.style.color = "#d7cabe";
+    }
+    gameWon = 0;
+    modal.style.display = "none";
+    turn = 0;
+    turnText.textContent = "Player " + (turn + 1);
+    noOfTurns = 0;
+})
 
 document.addEventListener('keydown', function (e) {
     if (e.key >= 1 && e.key <= 9) {
@@ -47,11 +64,14 @@ document.addEventListener('keydown', function (e) {
             if (noOfTurns >= 5) {
                 checkWin();
                 if (gameWon == 1)
-                    turnText.textContent = 1;
+                    //turnText.textContent = 1;
+                    showWinner();
                 else if (gameWon == 2)
-                    turnText.textContent = 2;
+                    showWinner();
+                //turnText.textContent = 2;
                 else if (gameWon == 3)
-                    turnText.textContent = "Draw";
+                    showWinner();
+                //turnText.textContent = "Draw";
                 showWinner();
             }
         }
