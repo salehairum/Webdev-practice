@@ -28,3 +28,8 @@ h1 {
     border: 1px solid #f4a261;
     border-radius: 10px;
 }
+
+.box:hover {
+    cursor: pointer;
+    background-color: #3b6b7e;
+}
