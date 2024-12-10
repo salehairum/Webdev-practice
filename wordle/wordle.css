@@ -14,17 +14,14 @@ h1 {
     margin-top: 20px;
 }
 
-.row {
+#wordRow {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
+.enterBox,
 .box {
-    margin: 5px 5px;
-    padding: 10px 10px;
-    width: 40px;
-    height: 40px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -35,7 +32,22 @@ h1 {
     border-radius: 10px;
 }
 
-.box:hover {
+.box {
+    margin: 5px 5px;
+    padding: 10px 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.enterBox {
+    margin: 5px 5px;
+    padding: 10px 20px;
+    width: 50px;
+    height: 40px;
+}
+
+.box:hover,
+.enterBox:hover {
     cursor: pointer;
     background-color: #3b6b7e;
 }
