@@ -30,6 +30,7 @@ h1 {
 
     border: 1px solid #f4a261;
     border-radius: 10px;
+
 }
 
 .box {
@@ -50,6 +51,25 @@ h1 {
 .enterBox:hover {
     cursor: pointer;
     background-color: #3b6b7e;
+
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.box.animate {
+    animation: pop 0.3s ease-in-out;
 }
 
 .keyboardRow {
