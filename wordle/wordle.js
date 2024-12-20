@@ -8,14 +8,20 @@ let letters = document.querySelectorAll(`.row${currentRow} .box`);
 document.addEventListener("keydown", function (e) {
     if (/^[a-zA-Z]$/.test(e.key)) {
         //for managing animations
+        letters[i].classList.remove("animate");
+
+        // Trigger a reflow, to allow for css animation to reload
+        void letters[i].offsetWidth;
         letters[i].classList.add("animate");
         letters[i].addEventListener("animationend", () => {
             letters[i].classList.remove("animate");
         });
 
+        letters[i].setAttribute("data-taken", "true");
+
         letters[i].textContent = e.key.toUpperCase();
         i++;
-        if (i >= lettersPerRow) {
+        if (i > lettersPerRow) {
             //if all letters are entered, then no more letters entered unless user goes back and modifies
             i = lettersPerRow - 1;
         }
@@ -33,15 +39,15 @@ document.addEventListener("keydown", function (e) {
     }
 
     if (e.key === "Backspace") {
-        filledLetters--;
-        i--;
+        if (i > 0) {
+            filledLetters--;
+            i--;
+        }
         letters[i].textContent = ' ';
-        letters[i].classList.add("animate");
-        letters[i].addEventListener("animationend", () => {
-            letters[i].classList.remove("animate");
-        });
+        letters[i].removeAttribute("data-taken");
     }
 })
+
 
 for (let letter of letters) {
     letter.addEventListener("click", function () {
