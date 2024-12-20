@@ -8,13 +8,13 @@ let letters = document.querySelectorAll(`.row${currentRow} .box`);
 document.addEventListener("keydown", function (e) {
     if (/^[a-zA-Z]$/.test(e.key)) {
         //for managing animations
-        letters[i].classList.remove("animate");
+        letters[i].classList.remove("animateInput");
 
         // Trigger a reflow, to allow for css animation to reload
         void letters[i].offsetWidth;
-        letters[i].classList.add("animate");
+        letters[i].classList.add("animateInput");
         letters[i].addEventListener("animationend", () => {
-            letters[i].classList.remove("animate");
+            letters[i].classList.remove("animateInput");
         });
 
         letters[i].setAttribute("data-taken", "true");
@@ -44,6 +44,16 @@ document.addEventListener("keydown", function (e) {
             i--;
         }
         letters[i].textContent = ' ';
+
+        letters[i].classList.remove("animateBackSpace");
+
+        // Trigger a reflow, to allow for css animation to reload
+        void letters[i].offsetWidth;
+        letters[i].classList.add("animateBackSpace");
+        letters[i].addEventListener("animationend", () => {
+            letters[i].classList.remove("animateBackSpace");
+        });
+
         letters[i].removeAttribute("data-taken");
     }
 })

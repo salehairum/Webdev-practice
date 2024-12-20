@@ -35,9 +35,9 @@ h1 {
 .box {
     margin: 5px 5px;
     padding: 10px 10px;
-    width: 40px;
-    height: 40px;
-    /* box-sizing: border-box; */
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
 }
 
 .enterBox {
@@ -61,21 +61,35 @@ h1 {
 
     50% {
         transform: scale(1.1);
-        border: 1px solid #ffd9ba;
+        border: 2px solid #ffd9ba;
     }
 
     100% {
         transform: scale(1);
-        border: 1px solid #ffd9ba;
+        border: 2px solid #ffd9ba;
     }
 }
 
-.box.animate {
+@keyframes fade {
+    0% {
+        border: 2px solid #ffd9ba;
+    }
+
+    100% {
+        border: 1px solid #f4a261;
+    }
+}
+
+.box.animateInput {
     animation: pop 0.3s ease-in-out;
 }
 
+.box.animateBackSpace {
+    animation: fade 0.3s ease;
+}
+
 .box[data-taken="true"] {
-    border: 1px solid #ffd9ba;
+    border: 2px solid #ffd9ba;
 }
 
 .keyboardRow {
