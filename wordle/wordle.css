@@ -54,6 +54,11 @@ h1 {
 
 }
 
+.letter {
+    display: inline-block;
+    transition: transform 0.5s ease-in-out;
+}
+
 @keyframes pop {
     0% {
         transform: scale(1);
@@ -80,8 +85,43 @@ h1 {
     }
 }
 
+@keyframes rotate {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(-1, -1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .box.animateInput {
     animation: pop 0.3s ease-in-out;
+}
+
+.box.animateEnterWord {
+    animation: scaleBox 0.3s ease-in-out;
+}
+
+.box.animateEnterWord .letter {
+    transform: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+@keyframes scaleBox {
+    0% {
+        transform: scale(1, 1);
+        /* Initial scale */
+    }
+
+    100% {
+        transform: scale(1, -1);
+        /* Flip the box */
+    }
 }
 
 .box.animateBackSpace {

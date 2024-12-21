@@ -11,33 +11,55 @@ const backSpaceKey = document.querySelector(".fa-delete-left").parentElement;
 const enterKey = document.querySelector(".enterBox").parentElement;
 
 function assignInput(value) {
-    letters[i].classList.remove("animateInput");
 
-    // Trigger a reflow, to allow for css animation to reload
-    void letters[i].offsetWidth;
-    letters[i].classList.add("animateInput");
-    letters[i].addEventListener("animationend", () => {
-        letters[i].classList.remove("animateInput");
-    });
+    if (letters[i]) {
+        letters[i].classList.remove("animateInputWord");
 
-    letters[i].setAttribute("data-taken", "true");
+        // Trigger a reflow, to allow for css animation to reload
+        void letters[i].offsetWidth;
+        letters[i].classList.add("animateInput");
+        letters[i].addEventListener("animationend", () => {
+            letters[i].classList.remove("animateInput");
+        });
 
-    letters[i].textContent = value;
-    i++;
-    if (i > lettersPerRow) {
-        //if all letters are entered, then no more letters entered unless user goes back and modifies
-        i = lettersPerRow - 1;
+        letters[i].setAttribute("data-taken", "true");
+
+        letters[i].querySelector('span').textContent = value;
+
+        i++;
+        if (i > lettersPerRow) {
+            //if all letters are entered, then no more letters entered unless user goes back and modifies
+            i = lettersPerRow - 1;
+        }
+        if (filledLetters < lettersPerRow)
+            filledLetters++;
+
     }
-    if (filledLetters < lettersPerRow)
-        filledLetters++;
-
+    else {
+        console.log(`letter ${i} not defined in row ${currentRow}`);
+    }
 }
 
 function enterWord() {
+    for (let j = 0; j < lettersPerRow; j++) {
+        console.log(`Animating letter ${j} in row ${currentRow}`);
+
+        letters[j].classList.remove("animateEnterWord");
+
+        // Trigger a reflow, to allow for css animation to reload
+        void letters[j].offsetWidth;
+        letters[j].classList.add("animateEnterWord");
+        letters[j].addEventListener("animationend", () => {
+            letters[j].classList.remove("animateEnterWord");
+        });
+    }
+
     filledLetters = 0;
     i = 0;
     currentRow++;
+
     letters = document.querySelectorAll(`.row${currentRow} .box`);
+
 }
 
 function backSpaceInput() {
@@ -45,7 +67,7 @@ function backSpaceInput() {
         filledLetters--;
         i--;
     }
-    letters[i].textContent = ' ';
+    letters[i].querySelector('span').textContent = ' ';
 
     letters[i].classList.remove("animateBackSpace");
 
