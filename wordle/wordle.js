@@ -2,6 +2,8 @@ let i = 0;   //maintains the letter being filled currently in a particular row
 let lettersPerRow = 5;
 let filledLetters = 0;
 let currentRow = 1;
+let actualWord = 'HELLO';
+let currentWord = new Array(lettersPerRow);
 
 let letters = document.querySelectorAll(`.row${currentRow} .box`);
 let keyboard = document.querySelectorAll(`.keyboardRow .box`);  //all letter keys
@@ -42,8 +44,6 @@ function assignInput(value) {
 
 function enterWord() {
     for (let j = 0; j < lettersPerRow; j++) {
-        console.log(`Animating letter ${j} in row ${currentRow}`);
-
         letters[j].classList.remove("animateEnterWord");
 
         // Trigger a reflow, to allow for css animation to reload
@@ -52,6 +52,24 @@ function enterWord() {
         letters[j].addEventListener("animationend", () => {
             letters[j].classList.remove("animateEnterWord");
         });
+
+        let currentLetter = letters[j].querySelector('span').textContent;
+
+        if (currentLetter === actualWord[j]) {
+            letters[j].classList.add("correctLetter");
+        }
+        else if (actualWord.includes(currentLetter)) {
+            letters[j].classList.add("letterExists");
+        }
+        else {
+            letters[j].classList.add("incorrectLetter");
+        }
+
+        currentWord[j] = currentLetter;
+    }
+
+    if (currentWord.join("") === actualWord) {
+        console.log("winner winner chicken dinner");
     }
 
     filledLetters = 0;
