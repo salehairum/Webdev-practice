@@ -2,8 +2,9 @@ let i = 0;   //maintains the letter being filled currently in a particular row
 let lettersPerRow = 5;
 let filledLetters = 0;
 let currentRow = 1;
-let actualWord = 'HELLO';
-let currentWord = new Array(lettersPerRow);
+let answers = [];
+let validGuesses = [];
+let actualWord = "";
 
 let letters = document.querySelectorAll(`.row${currentRow} .box`);
 let keyboard = document.querySelectorAll(`.keyboardRow .box`);  //all letter keys
@@ -11,6 +12,22 @@ let keyboard = document.querySelectorAll(`.keyboardRow .box`);  //all letter key
 const backSpaceKey = document.querySelector(".fa-delete-left").parentElement;
 //enter box is styled differently, its a different class
 const enterKey = document.querySelector(".enterBox").parentElement;
+
+//word selection logic
+fetch('./words.json')
+    .then(response => response.json())
+    .then(data => {
+        answers = data.answers;
+        answers = answers.map(word => word.toUpperCase());
+
+        validGuesses = data.validGuesses;
+        validGuesses = validGuesses.map(word => word.toUpperCase());
+
+        //generate a random word for this game
+        let randomIndex = Math.floor(Math.random() * answers.length);
+        actualWord = answers[randomIndex];
+    })
+    .catch(error => console.error('Error loading JSON:', error));
 
 function assignInput(value) {
 
@@ -100,7 +117,29 @@ function waitForAnimationEnd(element) {
 // }
 function enterWord() {
     const currentRowLetters = [...letters];
+    let userWord = new Array(lettersPerRow);
 
+    //check if the word is valid or not. first, combine all the letters(these are html) to form a proper string word
+    for (let j = 0; j < lettersPerRow; j++) {
+        userWord[j] = currentRowLetters[j].querySelector('span').textContent;
+    }
+
+    let currentWord = userWord.join("");
+    if (!answers.includes(currentWord) && !validGuesses.includes(currentWord)) {
+        invalidWord(currentRowLetters);
+    }
+    else {
+        //assign colours to all the letters
+        validWord(currentRowLetters, currentWord, userWord);
+    }
+
+    if (currentRow > 6) {
+        showGameEnd();
+    }
+
+}
+
+function validWord(currentRowLetters, currentWord, userWord) {
     for (let j = 0; j < lettersPerRow; j++) {
         setTimeout(() => {
             currentRowLetters[j].classList.remove("animateEnterWord");
@@ -112,7 +151,8 @@ function enterWord() {
                 currentRowLetters[j].classList.remove("animateEnterWord");
             });
 
-            let currentLetter = currentRowLetters[j].querySelector('span').textContent;
+            let currentLetter = userWord[j];
+
             let letterOnKeyboard = document.getElementById(`${currentLetter}`);
 
             if (currentLetter === actualWord[j]) {
@@ -125,12 +165,10 @@ function enterWord() {
             }
             else {
                 currentRowLetters[j].classList.add("incorrectLetter");
-                letterOnKeyboard.classList.add("incorrectLetter");
+                letterOnKeyboard.classList.add("incorrectLetterKeyboard");
             }
 
-            currentWord[j] = currentLetter;
-
-            if (currentWord.join("") === actualWord) {
+            if (currentWord === actualWord) {
                 showWinner();
             }
         }, j * 300); // Delay each animation by 200ms (adjust as needed)
@@ -141,6 +179,33 @@ function enterWord() {
     currentRow++;
 
     letters = document.querySelectorAll(`.row${currentRow} .box`);
+}
+
+function invalidWord(currentRowLetters) {
+    for (let j = 0; j < lettersPerRow; j++) {
+        currentRowLetters[j].classList.remove("animateInvalidWord");
+
+        // Trigger a reflow, to allow for css animation to reload
+        void currentRowLetters[j].offsetWidth;
+        currentRowLetters[j].classList.add("animateInvalidWord");
+        currentRowLetters[j].addEventListener("animationend", () => {
+            currentRowLetters[j].classList.remove("animateInvalidWord");
+        });
+    }
+    const popup = document.createElement('div'); // Create a new div for the row
+    popup.classList.add('popup'); // Add the 'row' class
+
+    popup.innerHTML = '<p>Invalid word!</p>'; // Initialize with a placeholder
+
+    const main = document.querySelector('.gameContainer');
+    main.appendChild(popup);
+
+    setTimeout(() => {
+        popup.classList.add('popupRemove');
+    }, 750);
+    setTimeout(() => {
+        popup.remove(); // Remove the popup element
+    }, 1000);
 }
 
 function backSpaceInput() {
@@ -213,6 +278,15 @@ function showWinner() {
     // winner.addEventListener("animationend", () => {
     //     winner.classList.remove("animateWinner");
     // });
+
+    //startGame();
+}
+
+function showGameEnd() {
+    let gameResult = document.querySelector(".overlay");
+    gameResult.style.display = "block";
+    let gameResultText = document.querySelector(".gameResultText");
+    gameResultText.textContent = "Word was: " + actualWord;
 }
 
 let closeButton = document.querySelector(".close");

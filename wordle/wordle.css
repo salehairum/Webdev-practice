@@ -90,6 +90,21 @@ h1 {
     margin-right: 10px;
 }
 
+.popup {
+    background-color: #f4a261;
+    color: white;
+    text-align: center;
+    z-index: 100;
+    position: fixed;
+
+    top: 40%;
+    left: 40%;
+
+    width: 20%;
+    font-size: medium;
+}
+
+
 @keyframes pop {
     0% {
         transform: scale(1);
@@ -106,6 +121,7 @@ h1 {
     }
 }
 
+/* this ones for letters */
 @keyframes fade {
     0% {
         border: 2px solid #ffd9ba;
@@ -115,6 +131,18 @@ h1 {
         border: 1px solid #f4a261;
     }
 }
+
+/* for popups */
+@keyframes fadeOut {
+    0% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 
 @keyframes rotateBox {
     0% {
@@ -134,6 +162,22 @@ h1 {
     100% {
         transform: scale(1, 1);
     }
+}
+
+@keyframes shakeBox {
+
+    0% {
+        transform: translateX(15%);
+    }
+
+    50% {
+        transform: translateX(-15%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
 }
 
 /* @keyframes rotate {
@@ -158,6 +202,11 @@ h1 {
     animation: rotateBox 0.3s ease-in-out;
 }
 
+.box.animateInvalidWord {
+    animation: shakeBox 0.3s ease-in-out;
+}
+
+
 /* 
 .box.animateEnterWord .letter {
     animation: rotateLetter 0.3s ease-in-out;
@@ -180,6 +229,12 @@ h1 {
     border-color: white;
 }
 
+.box.incorrectLetterKeyboard {
+    color: #f4a261;
+    border-color: #f4a261;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 /* 
 
 .box.animateEnterWord .letter {
@@ -189,6 +244,11 @@ h1 {
 
 .box.animateBackSpace {
     animation: fade 0.3s ease;
+}
+
+
+.popupRemove {
+    animation: fadeOut 0.3s ease;
 }
 
 .box[data-taken="true"] {
