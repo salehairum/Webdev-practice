@@ -322,11 +322,9 @@ for (let letter of letters) {
 
 function showWinner() {
     let gameResult = document.querySelector(".overlay");
-    gameResult.style.display = "block";
-    // winner.classList.add("animateWinner");
-    // winner.addEventListener("animationend", () => {
-    //     winner.classList.remove("animateWinner");
-    // });
+    setTimeout(() => {
+        gameResult.style.display = "block";
+    }, lettersPerRow * 300);
 
 }
 
