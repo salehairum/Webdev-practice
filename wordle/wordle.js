@@ -2,6 +2,7 @@ let i = 0;   //maintains the letter being filled currently in a particular row
 let lettersPerRow = 5;
 let filledLetters = 0;
 let currentRow = 1;
+let nRows = 6;
 let answers = [];
 let validGuesses = [];
 let actualWord = "";
@@ -28,6 +29,34 @@ fetch('./words.json')
         actualWord = answers[randomIndex];
     })
     .catch(error => console.error('Error loading JSON:', error));
+
+function startGame() {
+    i = 0;
+    currentRow = 1;
+    filledLetters = 0;
+    let randomIndex = Math.floor(Math.random() * answers.length);
+    actualWord = answers[randomIndex];
+
+    for (let row = 1; row < nRows; row++) {
+        letters = document.querySelectorAll(`.row${row} .box`);
+
+        for (let letter of letters) {
+            letter.setAttribute("data-taken", "false");
+            letter.querySelector('span').textContent = "";
+            letter.classList.remove("correctLetter");
+            letter.classList.remove("incorrectLetter");
+            letter.classList.remove("letterExists");
+        }
+    }
+
+    for (let key of keyboard) {
+        key.classList.remove("correctLetter");
+        key.classList.remove("incorrectLetterKeyboard");
+        key.classList.remove("letterExists");
+    }
+
+    letters = document.querySelectorAll(`.row${currentRow} .box`);
+}
 
 function assignInput(value) {
 
@@ -133,7 +162,7 @@ function enterWord() {
         validWord(currentRowLetters, currentWord, userWord);
     }
 
-    if (currentRow > 6) {
+    if (currentRow > nRows) {
         showGameEnd();
     }
 
@@ -157,23 +186,43 @@ function validWord(currentRowLetters, currentWord, userWord) {
 
             if (currentLetter === actualWord[j]) {
                 currentRowLetters[j].classList.add("correctLetter");
-                letterOnKeyboard.classList.add("correctLetter");
             }
             else if (actualWord.includes(currentLetter)) {
                 currentRowLetters[j].classList.add("letterExists");
-                letterOnKeyboard.classList.add("letterExists");
             }
             else {
                 currentRowLetters[j].classList.add("incorrectLetter");
-                letterOnKeyboard.classList.add("incorrectLetterKeyboard");
             }
 
             if (currentWord === actualWord) {
                 showWinner();
             }
-        }, j * 300); // Delay each animation by 200ms (adjust as needed)
+        }, j * 300);
 
     }
+
+    //keyboard is modified after the row animations are done
+    setTimeout(() => {
+        for (let j = 0; j < lettersPerRow; j++) {
+
+            let currentLetter = userWord[j];
+
+            let letterOnKeyboard = document.getElementById(`${currentLetter}`);
+
+            if (currentLetter === actualWord[j]) {
+                letterOnKeyboard.classList.add("correctLetter");
+            }
+            else if (actualWord.includes(currentLetter)) {
+                letterOnKeyboard.classList.add("letterExists");
+            }
+            else {
+                letterOnKeyboard.classList.add("incorrectLetterKeyboard");
+            }
+
+        }
+    }, lettersPerRow * 300);
+
+
     filledLetters = 0;
     i = 0;
     currentRow++;
@@ -279,7 +328,6 @@ function showWinner() {
     //     winner.classList.remove("animateWinner");
     // });
 
-    //startGame();
 }
 
 function showGameEnd() {
@@ -287,6 +335,7 @@ function showGameEnd() {
     gameResult.style.display = "block";
     let gameResultText = document.querySelector(".gameResultText");
     gameResultText.textContent = "Word was: " + actualWord;
+
 }
 
 let closeButton = document.querySelector(".close");
@@ -294,4 +343,6 @@ closeButton.addEventListener("click", function () {
     let gameResult = document.querySelector(".overlay");
     gameResult.style.display = "none";
     //and restart the game
+
+    startGame();
 });
