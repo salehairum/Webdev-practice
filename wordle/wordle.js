@@ -6,6 +6,7 @@ let nRows = 6;
 let answers = [];
 let validGuesses = [];
 let actualWord = "";
+let gameWon = false;
 
 let letters = document.querySelectorAll(`.row${currentRow} .box`);
 let keyboard = document.querySelectorAll(`.keyboardRow .box`);  //all letter keys
@@ -32,22 +33,31 @@ fetch('./words.json')
 
 function startGame() {
     i = 0;
-    currentRow = 1;
     filledLetters = 0;
     let randomIndex = Math.floor(Math.random() * answers.length);
     actualWord = answers[randomIndex];
+    gameWon = false;
 
-    for (let row = 1; row < nRows; row++) {
-        letters = document.querySelectorAll(`.row${row} .box`);
+    for (let row = 1; row <= nRows; row++) {
+        (function (rowNum) {
+            letters = document.querySelectorAll(`.row${rowNum} .box`);
 
-        for (let letter of letters) {
-            letter.setAttribute("data-taken", "false");
-            letter.querySelector('span').textContent = "";
-            letter.classList.remove("correctLetter");
-            letter.classList.remove("incorrectLetter");
-            letter.classList.remove("letterExists");
-        }
+            for (let j = 0; j < lettersPerRow; j++) {
+                (function (index) {
+                    letters[index].setAttribute("data-taken", "false");
+                    letters[index].querySelector(".letter1").textContent = "";
+                    letters[index].querySelector(".letter2").textContent = "";
+                    letters[index].classList.remove("correctLetter");
+                    letters[index].classList.remove("incorrectLetter");
+                    letters[index].classList.remove("letterExists");
+                    letters[index].classList.remove("animateEnterWord");
+                    letters[index].classList.remove("animateBackSpace");
+                })(j);
+            }
+        })(row);
     }
+
+
 
     for (let key of keyboard) {
         key.classList.remove("correctLetter");
@@ -55,33 +65,40 @@ function startGame() {
         key.classList.remove("letterExists");
     }
 
+    currentRow = 1;
     letters = document.querySelectorAll(`.row${currentRow} .box`);
 }
 
 function assignInput(value) {
 
     if (letters[i]) {
-        letters[i].classList.remove("animateInputWord");
+        (function (index) {
+            letters[index].classList.remove("animateInput");
+            // letters[index].classList.remove("resetGame");
 
-        // Trigger a reflow, to allow for css animation to reload
-        void letters[i].offsetWidth;
-        letters[i].classList.add("animateInput");
-        letters[i].addEventListener("animationend", () => {
-            letters[i].classList.remove("animateInput");
-        });
+            // Trigger a reflow, to allow for css animation to reload
+            void letters[index].offsetWidth;
+            letters[index].classList.add("animateInput");
 
-        letters[i].setAttribute("data-taken", "true");
+            letters[index].addEventListener("animationend", () => {
+                letters[index].classList.remove("animateInput");
+            });
 
-        letters[i].querySelector('span').textContent = value;
+            letters[index].setAttribute("data-taken", "true");
 
-        i++;
-        if (i > lettersPerRow) {
-            //if all letters are entered, then no more letters entered unless user goes back and modifies
-            i = lettersPerRow - 1;
-        }
-        if (filledLetters < lettersPerRow)
-            filledLetters++;
+            letters[index].querySelector(".letter1").textContent = value;
+            letters[index].querySelector(".letter2").textContent = value;
 
+            i++;
+            if (i > lettersPerRow) {
+                //if all letters are entered, then no more letters entered unless user goes back and modifies
+                i = lettersPerRow - 1;
+            }
+            if (filledLetters < lettersPerRow)
+                filledLetters++;
+
+
+        })(i);
     }
     else {
         console.log(`letter ${i} not defined in row ${currentRow}`);
@@ -162,43 +179,44 @@ function enterWord() {
         validWord(currentRowLetters, currentWord, userWord);
     }
 
-    if (currentRow > nRows) {
-        showGameEnd();
-    }
-
+    setTimeout(() => {
+        if (currentRow > nRows && !gameWon) {
+            showGameEnd();
+        }
+    }, lettersPerRow * 300);
 }
 
 function validWord(currentRowLetters, currentWord, userWord) {
     for (let j = 0; j < lettersPerRow; j++) {
-        setTimeout(() => {
-            currentRowLetters[j].classList.remove("animateEnterWord");
+        (function (index) {
+            setTimeout(() => {
+                currentRowLetters[index].classList.remove("animateEnterWord");
 
-            // Trigger a reflow, to allow for css animation to reload
-            void currentRowLetters[j].offsetWidth;
-            currentRowLetters[j].classList.add("animateEnterWord");
-            currentRowLetters[j].addEventListener("animationend", () => {
-                currentRowLetters[j].classList.remove("animateEnterWord");
-            });
+                // Trigger a reflow, to allow for css animation to reload
+                void currentRowLetters[index].offsetWidth;
+                currentRowLetters[index].classList.add("animateEnterWord");
+                currentRowLetters[index].addEventListener("animationend", () => {
+                    currentRowLetters[index].classList.remove("animateEnterWord");
+                });
 
-            let currentLetter = userWord[j];
+                let currentLetter = userWord[index];
+                let bgColor = window.getComputedStyle(currentRowLetters[index]).backgroundColor;
+                if (currentLetter === actualWord[index]) {
+                    currentRowLetters[index].classList.add("correctLetter");
+                }
+                else if (actualWord.includes(currentLetter)) {
+                    currentRowLetters[index].classList.add("letterExists");
+                }
+                else {
+                    currentRowLetters[index].classList.add("incorrectLetter");
+                }
 
-            let letterOnKeyboard = document.getElementById(`${currentLetter}`);
-
-            if (currentLetter === actualWord[j]) {
-                currentRowLetters[j].classList.add("correctLetter");
-            }
-            else if (actualWord.includes(currentLetter)) {
-                currentRowLetters[j].classList.add("letterExists");
-            }
-            else {
-                currentRowLetters[j].classList.add("incorrectLetter");
-            }
-
-            if (currentWord === actualWord) {
-                showWinner();
-            }
-        }, j * 300);
-
+                if (currentWord === actualWord) {
+                    gameWon = true;
+                    showWinner();
+                }
+            }, j * 300);
+        })(j);
     }
 
     //keyboard is modified after the row animations are done
@@ -211,6 +229,7 @@ function validWord(currentRowLetters, currentWord, userWord) {
 
             if (currentLetter === actualWord[j]) {
                 letterOnKeyboard.classList.add("correctLetter");
+                currentRowLetters[index].classList.remove("letterExists");
             }
             else if (actualWord.includes(currentLetter)) {
                 letterOnKeyboard.classList.add("letterExists");
@@ -262,28 +281,31 @@ function backSpaceInput() {
         filledLetters--;
         i--;
     }
-    letters[i].querySelector('span').textContent = ' ';
+    (function (index) {
+        letters[index].querySelector(".letter1").textContent = ' ';
+        letters[index].querySelector(".letter2").textContent = ' ';
+        letters[index].classList.remove("animateBackSpace");
 
-    letters[i].classList.remove("animateBackSpace");
+        // Trigger a reflow, to allow for css animation to reload
+        void letters[index].offsetWidth;
+        letters[index].classList.add("animateBackSpace");
 
-    // Trigger a reflow, to allow for css animation to reload
-    void letters[i].offsetWidth;
-    letters[i].classList.add("animateBackSpace");
-    letters[i].addEventListener("animationend", () => {
-        letters[i].classList.remove("animateBackSpace");
-    });
+        letters[index].addEventListener("animationend", () => {
+            letters[index].classList.remove("animateBackSpace");
+        });
 
-    letters[i].removeAttribute("data-taken");
+        letters[index].removeAttribute("data-taken");
+
+    })(i);
+
 }
 
 document.addEventListener("keydown", function (e) {
     if (/^[a-zA-Z]$/.test(e.key)) {
-        //for managing animations
         assignInput(e.key.toUpperCase());
     }
 
     if (e.key === "Enter" && filledLetters == lettersPerRow) {
-        //this needs to have a lot more implementation 
         enterWord();
     }
 
@@ -324,7 +346,7 @@ function showWinner() {
     let gameResult = document.querySelector(".overlay");
     setTimeout(() => {
         gameResult.style.display = "block";
-    }, lettersPerRow * 300);
+    }, (lettersPerRow + 1) * 300);
 
 }
 
