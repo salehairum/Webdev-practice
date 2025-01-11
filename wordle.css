@@ -1,0 +1,267 @@
+body {
+    background-color: #264653;
+    color: #f4a261;
+    font-size: 2em;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.gameContainer {
+    margin-top: 20px;
+}
+
+#wordRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.enterBox,
+.box {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+
+    border: 1px solid #f4a261;
+    border-radius: 10px;
+}
+
+.box {
+    margin: 5px 5px;
+    padding: 10px 10px;
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.8s ease;
+}
+
+.front,
+.back {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+.front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: rotateX(180deg);
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.enterBox {
+    margin: 5px 5px;
+    padding: 10px 20px;
+    width: 50px;
+    height: 40px;
+}
+
+.enterBox:hover {
+    cursor: pointer;
+    background-color: #3b6b7e;
+
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    display: none;
+}
+
+.gameResult {
+    background-color: #548193;
+    width: 20%;
+    margin: auto;
+    display: block;
+    z-index: 100;
+    text-align: center;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    border: 2px solid #ffffff;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.popup {
+    background-color: #f4a261;
+    color: white;
+    text-align: center;
+    z-index: 100;
+    position: fixed;
+
+    top: 40%;
+    left: 40%;
+
+    width: 20%;
+    font-size: medium;
+}
+
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        border: 2px solid #ffd9ba;
+    }
+
+    100% {
+        transform: scale(1);
+        border: 2px solid #ffd9ba;
+    }
+}
+
+/* this ones for letters */
+@keyframes fade {
+    0% {
+        border: 2px solid #ffd9ba;
+    }
+
+    100% {
+        border: 1px solid #f4a261;
+    }
+}
+
+/* for popups */
+@keyframes fadeOut {
+    0% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+@keyframes rotateBox {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    100% {
+        transform: scale(1, -1);
+    }
+}
+
+@keyframes rotateLetter {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes shakeBox {
+
+    0% {
+        transform: translateX(15%);
+    }
+
+    50% {
+        transform: translateX(-15%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
+.box.animateInput {
+    animation: pop 0.3s ease-in-out;
+}
+
+.box.animateEnterWord {
+    transform: rotateX(180deg);
+}
+
+.box.resetGame {
+    transform: rotateX(180deg);
+}
+
+.box.animateInvalidWord {
+    animation: shakeBox 0.3s ease-in-out;
+}
+
+.box.letterExists {
+    background-color: #c7ba47;
+    color: white;
+    border-color: white;
+}
+
+.box.correctLetter {
+    background-color: #229487;
+    color: white;
+    border-color: white;
+}
+
+.box.incorrectLetter {
+    color: white;
+    border-color: white;
+}
+
+.box.incorrectLetterKeyboard {
+    color: #f4a261;
+    border-color: #f4a261;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.box.animateBackSpace {
+    animation: fade 0.1s ease;
+}
+
+.popupRemove {
+    animation: fadeOut 0.3s ease;
+}
+
+.box[data-taken="true"] {
+    border: 2px solid #ffd9ba;
+}
+
+.keyboardRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

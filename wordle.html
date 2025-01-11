@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="wordle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Wordle</title>
+</head>
+
+<body>
+    <div class="gameContainer">
+        <div class="row1" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+        <div class="row2" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+        <div class="row3" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+        <div class="row4" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+        <div class="row5" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+        <div class="row6" id="wordRow">
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+            <div class="box">
+                <div class="front"><span class="letter1"></span></div>
+                <div class="back"><span class="letter2"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="keyboard">
+        <div class="keyboardRow">
+            <div class="box" id="Q"><span class="letter">Q</span></div>
+            <div class="box" id="W"><span class="letter">W</span></div>
+            <div class="box" id="E"><span class="letter">E</span></div>
+            <div class="box" id="R"><span class="letter">R</span></div>
+            <div class="box" id="T"><span class="letter">T</span></div>
+            <div class="box" id="Y"><span class="letter">Y</span></div>
+            <div class="box" id="U"><span class="letter">U</span></div>
+            <div class="box" id="I"><span class="letter">I</span></div>
+            <div class="box" id="O"><span class="letter">O</span></div>
+            <div class="box" id="P"><span class="letter">P</span></div>
+        </div>
+        <div class="keyboardRow">
+            <div class="box" id="A"><span class="letter">A</span></div>
+            <div class="box" id="S"><span class="letter">S</span></div>
+            <div class="box" id="D"><span class="letter">D</span></div>
+            <div class="box" id="F"><span class="letter">F</span></div>
+            <div class="box" id="G"><span class="letter">G</span></div>
+            <div class="box" id="H"><span class="letter">H</span></div>
+            <div class="box" id="J"><span class="letter">J</span></div>
+            <div class="box" id="K"><span class="letter">K</span></div>
+            <div class="box" id="L"><span class="letter">L</span></div>
+        </div>
+        <div class="keyboardRow">
+            <div class="box" id="Backspace"><i class="fa-solid fa-delete-left"></i></div>
+            <div class="box" id="Z"><span class="letter">Z</span></div>
+            <div class="box" id="X"><span class="letter">X</span></div>
+            <div class="box" id="C"><span class="letter">C</span></div>
+            <div class="box" id="V"><span class="letter">V</span></div>
+            <div class="box" id="B"><span class="letter">B</span></div>
+            <div class="box" id="N"><span class="letter">N</span></div>
+            <div class="box" id="M"><span class="letter">M</span></div>
+            <div class="enterBox" id="Enter"><span class="letter">Enter</span></div>
+        </div>
+    </div>
+
+    <div id="modalOverlay" class="overlay">
+        <div class="gameResult">
+            <span id="closeModal" class="close">&times;</span>
+            <p class="gameResultText">Chicken Chicken Winner Dinner!</p>
+        </div>
+    </div>
+
+
+    <script src="wordle.js"></script>
+</body>
+
+</html>

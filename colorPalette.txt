@@ -1,0 +1,5 @@
+background: #264653
+correct letters bg: #2a9d8f
+incorrect letters bg: #e76f51
+actual letters: #e9c46a
+other fonts: #f4a261
