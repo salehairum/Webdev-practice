@@ -29,4 +29,4 @@ jobs:
             -f pages[source][branch]=gh-pages \
             -f pages[source][path]=/
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Set GH_TOKEN for GitHub CLI
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Set GH_TOKEN for GitHub CLI
