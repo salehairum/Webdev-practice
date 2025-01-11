@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Triggers on pushes to the 'main' branch
+      - main
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: wordle  # Specify the 'wordle' folder containing your index.html
+          publish_dir: wordle  # Update the directory where your HTML files are
 
       # Step 3: Configure GitHub Pages
       - name: Configure GitHub Pages
@@ -29,4 +29,4 @@ jobs:
             -f pages[source][branch]=gh-pages \
             -f pages[source][path]=/
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Set GH_TOKEN for GitHub CLI
