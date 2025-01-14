@@ -28,6 +28,7 @@ fetch('./words.json')
         //generate a random word for this game
         let randomIndex = Math.floor(Math.random() * answers.length);
         actualWord = answers[randomIndex];
+
     })
     .catch(error => console.error('Error loading JSON:', error));
 
@@ -56,8 +57,6 @@ function startGame() {
             }
         })(row);
     }
-
-
 
     for (let key of keyboard) {
         key.classList.remove("correctLetter");
@@ -110,57 +109,6 @@ function waitForAnimationEnd(element) {
     });
 }
 
-// async function enterWord() {
-//     const currentRowLetters = [...letters];
-//     const animationPromises = [];
-
-//     for (let j = 0; j < lettersPerRow; j++) {
-//         setTimeout(() => {
-//             currentRowLetters[j].classList.remove("animateEnterWord");
-
-//             // Trigger a reflow, to allow for css animation to reload
-//             void currentRowLetters[j].offsetWidth;
-//             currentRowLetters[j].classList.add("animateEnterWord");
-
-//             animationPromises.push(waitForAnimationEnd(currentRowLetters[j]));
-
-//             let currentLetter = currentRowLetters[j].querySelector('span').textContent;
-//             let letterOnKeyboard = document.getElementById(`${currentLetter}`);
-
-//             if (currentLetter === actualWord[j]) {
-//                 currentRowLetters[j].classList.add("correctLetter");
-//             } else if (actualWord.includes(currentLetter)) {
-//                 currentRowLetters[j].classList.add("letterExists");
-//             } else {
-//                 currentRowLetters[j].classList.add("incorrectLetter");
-//             }
-//         }, j * 300);
-
-//     }
-
-//     // Wait for all animations to complete
-//     await Promise.all(animationPromises);
-
-//     // Modify letterOnKeyboard class after all animations are done
-//     for (let j = 0; j < lettersPerRow; j++) {
-//         let currentLetter = currentRowLetters[j].querySelector('span').textContent;
-//         let letterOnKeyboard = document.getElementById(`${currentLetter}`);
-
-//         if (currentLetter === actualWord[j]) {
-//             letterOnKeyboard.classList.add("correctLetter");
-//         } else if (actualWord.includes(currentLetter)) {
-//             letterOnKeyboard.classList.add("letterExists");
-//         } else {
-//             letterOnKeyboard.classList.add("incorrectLetter");
-//         }
-//     }
-
-//     filledLetters = 0;
-//     i = 0;
-//     currentRow++;
-
-//     letters = document.querySelectorAll(`.row${currentRow} .box`);
-// }
 function enterWord() {
     const currentRowLetters = [...letters];
     let userWord = new Array(lettersPerRow);
@@ -201,6 +149,7 @@ function validWord(currentRowLetters, currentWord, userWord) {
 
                 let currentLetter = userWord[index];
                 let bgColor = window.getComputedStyle(currentRowLetters[index]).backgroundColor;
+
                 if (currentLetter === actualWord[index]) {
                     currentRowLetters[index].classList.add("correctLetter");
                 }
@@ -229,7 +178,6 @@ function validWord(currentRowLetters, currentWord, userWord) {
 
             if (currentLetter === actualWord[j]) {
                 letterOnKeyboard.classList.add("correctLetter");
-                currentRowLetters[index].classList.remove("letterExists");
             }
             else if (actualWord.includes(currentLetter)) {
                 letterOnKeyboard.classList.add("letterExists");
@@ -352,17 +300,17 @@ function showWinner() {
 
 function showGameEnd() {
     let gameResult = document.querySelector(".overlay");
-    gameResult.style.display = "block";
     let gameResultText = document.querySelector(".gameResultText");
     gameResultText.textContent = "Word was: " + actualWord;
-
+    setTimeout(() => {
+        gameResult.style.display = "block";
+    }, (lettersPerRow) * 300);
 }
 
 let closeButton = document.querySelector(".close");
 closeButton.addEventListener("click", function () {
     let gameResult = document.querySelector(".overlay");
     gameResult.style.display = "none";
-    //and restart the game
 
     startGame();
 });
