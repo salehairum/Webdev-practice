@@ -1,0 +1,4 @@
+snake: #8ac926
+food(apple): #ff595e
+bg: #ffca3a
+border: #2b2d42
