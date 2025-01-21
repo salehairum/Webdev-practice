@@ -30,13 +30,34 @@ body {
 }
 
 .boxDark {
+    background-color: #ffca3a;
+}
+
+.boxLight {
     background-color: #ffda74;
 }
 
-.snakeBox {
+.snakeBody {
     background-color: #8ac926;
-    border: 1px solid #2b2d42;
+    border: 1px solid #25af6c;
+    border-radius: #ff595e;
     box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+}
+
+.snakeHead {
+    background-image: url(snakeHead.png);
+    background-size: cover;
+    border: 1px solid #25af6c;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+}
+
+.apple {
+    background-image: url(appletr.png);
+    background-size: cover;
     width: 30px;
     height: 30px;
 }
