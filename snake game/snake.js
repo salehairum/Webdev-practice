@@ -1,6 +1,6 @@
 const rows = 21;
 const cols = 20;
-let snakeLength = 5;   //length of snake at the start
+let snakeLength = 3;   //length of snake at the start
 let snake = [[Math.floor(rows / 2), snakeLength]];
 let prevSnake = JSON.parse(JSON.stringify(snake));  //this is added to remove previous snake when i render a new one(as the position changes)
 let gameEnd = false;
@@ -9,9 +9,19 @@ let foodPos = [Math.floor(rows / 2), 15];
 let direction = ['r'];
 let score = 0;
 
-initGame();
+const moveSound = new Audio('move.wav');
+const deathSound = new Audio('gameOver.wav');
+const eatSound = new Audio('eat.wav');
+
+const startButton = document.getElementById('startGame');
+
+startButton.addEventListener('click', function () {
+    initGame();
+    startButton.style.display = 'none';
+})
 
 function initGame() {
+    preloadSounds();
     createBoard();
     initSnakeBodyWithDirection();
     const box = document.querySelector(`[data-row="${foodPos[0]}"][data-col="${foodPos[1]}"]`);
@@ -27,7 +37,7 @@ function resetGame() {
     let box = document.querySelector(`[data-row="${foodPos[0]}"][data-col="${foodPos[1]}"]`);
     box.classList.remove('apple');
 
-    snakeLength = 5;   //length of snake at the start
+    snakeLength = 3;   //length of snake at the start
     snake = [[Math.floor(rows / 2), snakeLength]];
     prevSnake = JSON.parse(JSON.stringify(snake));  //this is added to remove previous snake when i render a new one(as the position changes)
     gameEnd = false;
@@ -44,6 +54,12 @@ function resetGame() {
     box.classList.add('apple');
 }
 
+function preloadSounds() {
+    moveSound.load();
+    deathSound.load();
+    eatSound.load();
+}
+
 function gameFlow() {
     if (!gameEnd) {
         removeOldSnake();
@@ -53,6 +69,7 @@ function gameFlow() {
         updateDirection();
     }
     else {
+
         let gameResult = document.querySelector(".overlay");
         let gameResultText = document.querySelector(".gameResultText");
         gameResultText.textContent = "Your score is " + score + "!";
@@ -112,8 +129,6 @@ function removeOldSnake() {
                 box.classList.add('boxLight');
         }
     }
-
-
 }
 
 function drawSnake() {
@@ -141,6 +156,9 @@ function checkFoodCollision() {
         addToTail();
 
         score++;
+
+        eatSound.currentTime = 0;
+        eatSound.play();
 
         let scoreElement = document.querySelector(".score");
         scoreElement.textContent = "Score: " + score;
@@ -178,6 +196,8 @@ function checkFoodCollision() {
 function checkBoundaryCollision() {
     if (snake[0][0] >= rows || snake[0][1] >= cols || snake[0][0] < 0 || snake[0][1] < 0) {
         gameEnd = true;
+        deathSound.currentTime = 0;
+        deathSound.play();
     }
 }
 
@@ -185,6 +205,8 @@ function checkSelfCollision() {
     for (let i = 1; i < snakeLength; i++) {
         if (snake[0][0] === snake[i][0] && snake[0][1] === snake[i][1]) {
             gameEnd = true;
+            deathSound.currentTime = 0;
+            deathSound.play();
         }
     }
 }
@@ -242,8 +264,9 @@ function addToTail() {
     snakeLength++;
 
 }
-
 document.addEventListener('keydown', (e) => {
+    let oldDirection = currentDirection;  // Store the previous direction
+
     if (e.key === 'ArrowUp' && currentDirection !== 'd') {
         currentDirection = 'u';
     }
@@ -255,6 +278,12 @@ document.addEventListener('keydown', (e) => {
     }
     else if (e.key === 'ArrowRight' && currentDirection !== 'l') {
         currentDirection = 'r';
+    }
+
+    // Only play sound if direction actually changed
+    if (oldDirection !== currentDirection) {
+        moveSound.currentTime = 0; // Reset the sound to the start
+        moveSound.play();
     }
 
     direction[0] = currentDirection;

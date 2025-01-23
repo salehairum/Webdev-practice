@@ -9,6 +9,23 @@ main {
     justify-content: center;
 }
 
+#startGame {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #8ac926;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    z-index: 1;
+    position: relative;
+}
+
+#startGame:hover {
+    background-color: #6fa31e;
+}
+
 .score {
     color: white;
     text-align: center;
