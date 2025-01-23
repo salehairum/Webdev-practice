@@ -21,29 +21,7 @@ function initGame() {
 }
 
 function resetGame() {
-    //remove the snake
-    for (let i = 0; i < snakeLength; i++) {
-        const box = document.querySelector(`[data-row="${snake[i][0]}"][data-col="${snake[i][1]}"]`);
-        let row = box.getAttribute('data-row');
-        let col = box.getAttribute('data-col');
-
-        box.classList.remove('snakeHead');
-        box.classList.remove('snakeBody');
-        box.style.transform = '';
-
-        if (prevSnake[i][0] % 2 === 0) {
-            if (prevSnake[i][1] % 2 === 0)
-                box.classList.add('boxLight');
-            else
-                box.classList.add('boxDark');
-        }
-        else {
-            if (prevSnake[i][1] % 2 === 0)
-                box.classList.add('boxDark');
-            else
-                box.classList.add('boxLight');
-        }
-    }
+    removeOldSnake();
 
     //remove the food
     let box = document.querySelector(`[data-row="${foodPos[0]}"][data-col="${foodPos[1]}"]`);
@@ -58,10 +36,17 @@ function resetGame() {
     direction = ['r'];
     score = 0;
 
+    let scoreElement = document.querySelector(".score");
+    scoreElement.textContent = "Score: " + score;
+
+    initSnakeBodyWithDirection();
+    box = document.querySelector(`[data-row="${foodPos[0]}"][data-col="${foodPos[1]}"]`);
+    box.classList.add('apple');
 }
 
 function gameFlow() {
     if (!gameEnd) {
+        removeOldSnake();
         drawSnake();
         checkFoodCollision();
         changeBodyPosition();
@@ -104,7 +89,7 @@ function initSnakeBodyWithDirection() {
     prevSnake = JSON.parse(JSON.stringify(snake));
 }
 
-function drawSnake() {
+function removeOldSnake() {
     for (let i = 0; i < prevSnake.length; i++) {
         const box = document.querySelector(`[data-row="${prevSnake[i][0]}"][data-col="${prevSnake[i][1]}"]`);
         let row = box.getAttribute('data-row');
@@ -129,6 +114,10 @@ function drawSnake() {
     }
 
 
+}
+
+function drawSnake() {
+
     for (let i = 0; i < snakeLength; i++) {
         const box = document.querySelector(`[data-row="${snake[i][0]}"][data-col="${snake[i][1]}"]`);
         let row = box.getAttribute('data-row');
@@ -152,6 +141,9 @@ function checkFoodCollision() {
         addToTail();
 
         score++;
+
+        let scoreElement = document.querySelector(".score");
+        scoreElement.textContent = "Score: " + score;
 
         let box = document.querySelector(`[data-row="${foodPos[0]}"][data-col="${foodPos[1]}"]`);
         box.classList.remove('apple');
@@ -274,5 +266,5 @@ closeButton.addEventListener("click", function () {
     let gameResult = document.querySelector(".overlay");
     gameResult.style.display = "none";
 
-    initGame();
+    resetGame();
 });
